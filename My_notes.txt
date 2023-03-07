@@ -1,0 +1,25 @@
+CRYPTO LOTTERY with NEXT.JS! (React.js, Solidity, TypeScript, TailwindCSS, Thirdweb)
+	- https://www.youtube.com/live/oNlhptQmChc?feature=share
+	- Lottery Smart Contract Repo: https://github.com/sonnysangha/lottery-smart-contract
+	
+	xx:xx how to add mumbai matic to metamask
+		- 0x4d48bCA56270bA8b60446A552558853eA4e9e5d8 / 0x781e919DB1e055C1672E2C6067fE8adBD5db1e50
+		- https://medium.com/stakingbits/how-to-connect-polygon-mumbai-testnet-to-metamask-fc3487a3871f
+
+		- https://portal.thirdweb.com/react
+		- npm i @thirdweb-dev/react @thirdweb-dev/sdk ethers@5.5.1
+		- npx thirdweb create --contract
+		- npx thirdweb deploy
+
+	01:25:00 react-spinners
+	
+	02:10:56 npm i react-countdown
+	02:22:23 npm i react-hot-toast
+	02:47:50 Array()
+
+	03:02:51 React Fast Marquee
+
+	03:06:49 Authoritation
+
+	03:13:40 Mark
+
