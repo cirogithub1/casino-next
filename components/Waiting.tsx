@@ -1,18 +1,10 @@
-import Spinner from "./Spinner"
 
-export default function Loader({ screen, size, title }:{ screen:string, size:string, title:string }) {
-	return(
-		<div className={`gradient-bg-header ${screen} flex flex-col
-      items-center justify-center`}>
-      <Spinner size={size} />
-      {title 
-      ?
-        <h1 className="text-gradient text-white font-bold mt-2 text-lg">
-          {title}
-        </h1>
-      : 
-        ""
-      }
-    </div>
+function Waiting({ size }:{ size:string }) {
+	return (
+		<div className="flex justify-center items-center py-3">
+			<div className={`animate-spin rounded-full ${size} border-t-2 border-red-700`}/>
+		</div>
 	)
 }
+
+export default Waiting
