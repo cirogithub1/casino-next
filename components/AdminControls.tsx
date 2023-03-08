@@ -1,6 +1,5 @@
 import {
-	useContractRead,
-  useContractWrite } from '@thirdweb-dev/react'
+	useContractRead } from '@thirdweb-dev/react'
 
 import { ethers } from 'ethers'
 
@@ -9,7 +8,6 @@ import { BiStar } from "react-icons/bi"
 import { FaEthereum } from "react-icons/fa"
 import { HiArrowPath } from "react-icons/hi2"
 import { HiArrowUturnDown } from "react-icons/hi2"
-import { toast } from 'react-hot-toast'
 
 import { currency } from '../currency'
 
@@ -42,37 +40,6 @@ const AdminControls = ({ contract, expiration }:{ expiration: any, contract: any
 	}
 	const totalCommission = ethers.utils.formatUnits(totalCommission_hex_Checked)
 
-	// DrawWinnerTicket is a function
-	const { mutate: DrawWinnerTicket, isLoading: drawWinnerLoading } = useContractWrite(contract, 'DrawWinnerTicket')
-	
-	// WithdrawCommission is a function
-	const { mutate: WithdrawCommission, isLoading: drawCommissionLoading } = useContractWrite(contract, 'WithdrawCommission')
-
-	// RefunAll is a function
-	// const { mutate: RestartDraw, isLoading:restartLoading } = useContractWrite(contract, 'restartDraw')
-
-	// RefunAll is a function
-	const { mutate: RefundAll, isLoading:efundLoading } = useContractWrite(contract, 'RefundAll')
-
-	const onDrawWinner = async () => {
-		
-		setWinningsPage(true)
-	}
-
-	const onWithdrawCommission= async () => {
-
-		setComissionsPage(true)
-	}
-
-	const onRestart= async () => {
-
-		setRestartPage(true)
-	}
-
-	const onRefundAll= async () => {
-		setRefundPage(true)
-	}
-
 	return (
 			<div className='admin-controls flex justify-center'>
 				<div className='white-glassmorphism-noBorder text-white text-center px-5 py-3'>
@@ -99,7 +66,7 @@ const AdminControls = ({ contract, expiration }:{ expiration: any, contract: any
 
 						<button 
 							className='admin-button'
-							onClick={onDrawWinner}>
+							onClick={() => (setWinningsPage(true))}>
 								{winningsPage
 								? <DrawWinnerPage contract={contract}/>
 								: <>
@@ -113,7 +80,7 @@ const AdminControls = ({ contract, expiration }:{ expiration: any, contract: any
 
 						<button 
 							className='admin-button'
-							onClick={onWithdrawCommission}>
+							onClick={() => (setComissionsPage(true))}>
 								{comissionsPage
 									? <WithdrawComissionsPage contract={contract}/>
 									: <>
@@ -127,7 +94,7 @@ const AdminControls = ({ contract, expiration }:{ expiration: any, contract: any
 
 						<button 
 							className='admin-button'
-							onClick={onRestart}>
+							onClick={() => (setRestartPage(true))}>
 								{restartPage
 									? <RestartDrawPage contract={contract} />
 									: <>
@@ -141,7 +108,7 @@ const AdminControls = ({ contract, expiration }:{ expiration: any, contract: any
 					
 						<button 
 							className='admin-button'
-							onClick={onRefundAll}>
+							onClick={() => (setRefundPage(true))}>
 								{refundPage
 									? <RefundPage contract={contract}/>
 									: <>

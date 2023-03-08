@@ -32,8 +32,7 @@ const DrawWinnerPage = ({ contract } : WinnerPage) => {
 	return (
 		<>
 			{!isDrawWinner
-				? <Spinner size={"h-8 w-8"} />
-				: setWinningsPage(false)
+				&& <Spinner size={"h-8 w-8"} />
 			}
 		</>
 	)

@@ -13,7 +13,7 @@ const WithdrawComissionsPage = ({ contract } : WithdrawPage) => {
 	const {setComissionsPage} = useContext(LoadingContext)
 	
 	// ** with this line I ask of thirdweb if transaction was done after calling function: WithdrawWinnings([{}] **) 
-	const { data: isWithdrawComissions, isLoading:WithdrawComissionsLoading, error } = useContractRead(contract, "WithdrawCommission")
+	const { data: isWithdrawComissions, isLoading:withdrawComissionsLoading, error } = useContractRead(contract, "WithdrawCommission")
 
 	if ( error ) {
 		console.error("contract call failure", error)
@@ -30,9 +30,7 @@ const WithdrawComissionsPage = ({ contract } : WithdrawPage) => {
 	return (
 		<>
 			{!isWithdrawComissions 
-				? <Spinner size={"h-8 w-8"} />
-				: setComissionsPage(false)
-			}
+				&& <Spinner size={"h-8 w-8"} />			}
 		</>
 	)
 }

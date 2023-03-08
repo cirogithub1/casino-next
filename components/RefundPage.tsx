@@ -31,8 +31,7 @@ const RefundPage = ({ contract } : WinnerPage) => {
 	return (
 		<>
 			{!isRefund
-				? <Spinner size={"h-8 w-8"} />
-				: setRefundPage(false)
+				&& <Spinner size={"h-8 w-8"} />
 			}
 		</>
 	)

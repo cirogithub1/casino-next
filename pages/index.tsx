@@ -20,9 +20,11 @@ import Footer from '../components/Footer'
 import FastMarkee from '../components/FastMarkee'
 import AdminControls from '../components/AdminControls'
 import WithdrawWinningsPage from '../components/WithdrawWinningsPage'
+import TicketsPage from '../components/TicketsPage'
 
 const Home: NextPage = () => {
   const [winningsPage, setWinningsPage] = useState(false)
+  const [ticketsPage, setTicketsPage] = useState(false)
   
   const address = useAddress()
 
@@ -63,9 +65,6 @@ const Home: NextPage = () => {
   // BuyTickets is a function
   const { mutate: BuyTickets, isLoading:buyLoading } = useContractWrite(contract, 'BuyTickets')
 
-  // WithdrawWinnings is a function
-  const { mutate: WithdrawWinnings, isLoading:wdwLoading } = useContractWrite(contract, 'WithdrawWinnings')
-  
   if (contractLoading || remainLoading || rewardLoading || priceLoading || commissionLoading || expirationLoading || winningsLoading || lastWinnerLoading || lastAmountLoading || operatorLoading) return (
     
     <Loader screen={"h-screen"} size={"h-32 w-32"} title={"Loading Casino ..."}/>
@@ -101,11 +100,18 @@ const Home: NextPage = () => {
 
     userTickets = totalUserTickets
   }
+  const buyTickets_str = 
+    { 
+      value: ethers.utils.parseEther(
+        (Number(ticketPrice) * ticketsQty).toString())
+    }
+   
   
   if (!address) return <Login />
 
-  const handlerClick = async () => {
-    const toastMessage = toast.loading("Buying your Tickets")
+  const handlerTickets = async () => {
+    setTicketsPage(true)
+    // const toastMessage = toast.loading("Buying your Tickets")
 
     // console.log("ticketPrice =", typeof Number(ticketPrice), "value =", ticketPrice)
     // console.log("BigNumber =", ethers.utils.parseEther((Number(ticketPrice) * ticketsQty).toString()))
@@ -118,16 +124,12 @@ const Home: NextPage = () => {
         }
       ])
 
-      toast.success("Tickets purchased succesfully", {id: toastMessage})
+      // toast.success("Tickets purchased succesfully", {id: toastMessage})
       
     } catch (err) {
       toast.error("Something was wrong!")
       console.error("contract call failed", err)
     }
-  }
-
-  const onWithdrawWinnings = async () => {
-    setWinningsPage(true)
   }
 
   return (
@@ -151,7 +153,7 @@ const Home: NextPage = () => {
               
                 <button 
                   className='eth-card p-4 rounded-md w-full px-10'
-                  onClick={onWithdrawWinnings}>
+                  onClick={() => (setWinningsPage(true))}>
                     {winningsPage
                     ? 
                       <WithdrawWinningsPage contract={contract} setWinningsPage={setWinningsPage} />
@@ -271,8 +273,18 @@ const Home: NextPage = () => {
               className={`${(expiration.toString() > Date.now().toString() && remainingTickets.toNumber() !== 0) ? "eth-card" : "eth-card-disabled cursor-not-allowed"} 
               w-full px-10 py-4 rounded-md mt-5 font-semibold
               text-white shadow-xl`}
-              onClick={handlerClick}>
-              Buy {ticketsQty} Ticket{ticketsQty > 1 && "s"}
+              onClick={handlerTickets}>
+                {ticketsPage
+                ? <TicketsPage 
+                    contract={contract} 
+                    setTicketsPage={setTicketsPage}
+                    buyTickets_str={buyTickets_str}
+                    userTickets={userTickets} />
+                : <p> 
+                    Buy {ticketsQty} Ticket{ticketsQty > 1 && "s"}
+                  </p>
+                }
+              
             </button>
           </div>
           
@@ -284,9 +296,8 @@ const Home: NextPage = () => {
                 </p>
 
                 <div className='flex max-w-sm flex-wrap gap-2'>
-                  {Array(userTickets)
-                    .fill("")
-                    .map((_, index) => (
+                  {Array(userTickets).fill("").map((_, index) => 
+                    (
                       <p 
                         key={index}
                         className='text-emerald-500 h-20 w-12 bg-emerald-500/30 
